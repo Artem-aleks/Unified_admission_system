@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
@@ -33,14 +32,20 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userDto.getFirstName() + " " + userDto.getLastName());
         user.setEmail(userDto.getEmail());
-
-        //encrypt the password once we integrate spring security
-        //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setTotalEgeScore(userDto.getTotalEgeScore());
+        user.setEgeScoredSubjects(userDto.getEgeScoredSubjects());
+        user.setUniversitiesApplyingTo(userDto.getUniversitiesApplyingTo());
+
+        // Check if the "ROLE_ADMIN" role exists, and create it if it doesn't
         Role role = roleRepository.findByName("ROLE_ADMIN");
-        if(role == null){
-            role = checkRoleExist();
+        if (role == null) {
+            role = new Role();
+            role.setName("ROLE_ADMIN");
+            role = roleRepository.save(role);
         }
+
+        // Assign the role to the user
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
@@ -53,22 +58,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map((user) -> convertEntityToDto(user))
+        return users.stream()
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
-    private UserDto convertEntityToDto(User user){
+    private UserDto convertToDto(User user) {
         UserDto userDto = new UserDto();
-        String[] name = user.getName().split(" ");
-        userDto.setFirstName(name[0]);
-        userDto.setLastName(name[1]);
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getName().split(" ")[0]);
+        userDto.setLastName(user.getName().split(" ")[1]);
         userDto.setEmail(user.getEmail());
+        userDto.setTotalEgeScore(user.getTotalEgeScore());
+        userDto.setEgeScoredSubjects(user.getEgeScoredSubjects());
+        userDto.setUniversitiesApplyingTo(user.getUniversitiesApplyingTo());
         return userDto;
-    }
-
-    private Role checkRoleExist() {
-        Role role = new Role();
-        role.setName("ROLE_ADMIN");
-        return roleRepository.save(role);
     }
 }

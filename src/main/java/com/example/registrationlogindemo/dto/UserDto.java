@@ -11,8 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto
-{
+public class UserDto {
     private Long id;
     @NotEmpty
     private String firstName;
@@ -23,6 +22,9 @@ public class UserDto
     private String email;
     @NotEmpty(message = "Password should not be empty")
     private String password;
+    private int totalEgeScore;
+    private int egeScoredSubjects;
+    private String universitiesApplyingTo;
 
     public String getFirstName() {
         return firstName;
@@ -39,7 +41,4 @@ public class UserDto
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-
-
 }

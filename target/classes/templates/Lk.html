@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>University</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        /* Ваши CSS-стили */
+    </style>
+</head>
+<body>
+<header data-bs-theme="dark">
+    <!-- Ваш код заголовка -->
+</header>
+<div class="container">
+    <h1>Ваши данные</h1>
+    <div class="profile-info">
+        Имя и Фамилия: <span th:text="${name}"></span>
+    </div>
+    <div class="profile-info">
+        Адрес электронной почты: <span th:text="${email}"></span>
+    </div>
+    <h1>Укажите дополнительные данные для формирование подбора университетов</h1>
+    <form th:action="@{/save}" method="post">
+        <div class="profile-info">
+            Сколько предметов вы сдавали на ЕГЭ? <input type="number" min="3" max="4" th:value="${subjectCount}" name="subjectCount" required>
+        </div>
+        <div class="profile-info">
+            Баллы за ЕГЭ(в сумме): <input type="number" min="0" th:max="${subjectCount == 3 ? 300 : 400}" th:value="${egeScore}" name="egeScore" required>
+        </div>
+        <div class="profile-info">
+            Сколько университетов вы хотите выбрать? <input type="number" min="1" max="3" th:value="${universityCount}" name="universityCount" required>
+        </div>
+        <div th:if="${universityCount > 0}">
+            <h1>Выберите университеты</h1>
+            <div class="profile-info" th:each="i : ${#numbers.sequence(1, universityCount)}">
+                Университет №<span th:text="${i}"></span>: <input type="text" th:name="|universities[${i-1}]|" required>
+            </div>
+        </div>
+        <div class="profile-info">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

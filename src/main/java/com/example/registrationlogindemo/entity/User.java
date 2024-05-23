@@ -14,8 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name="users")
-public class User
-{
+public class User {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -30,6 +29,15 @@ public class User
 
     @Column(nullable=false)
     private String password;
+
+    @Column
+    private int totalEgeScore;
+
+    @Column
+    private int egeScoredSubjects;
+
+    @Column
+    private String universitiesApplyingTo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinTable(
