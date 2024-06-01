@@ -1,7 +1,9 @@
 package com.example.registrationlogindemo.controller;
+
 import com.example.registrationlogindemo.dto.UserDto;
 import com.example.registrationlogindemo.entity.User;
-import com.example.registrationlogindemo.service.UserService;
+import com.example.registrationlogindemo.entity.Slide;
+import com.example.registrationlogindemo.repository.UserService;
 import jakarta.validation.Valid;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,13 +31,30 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String home(Model model) {
+        // Здесь вы можете добавить данные для слайдов карусели
+        model.addAttribute("slides", getSlides());
+        return "home";
+    }
+
+    private List<Slide> getSlides() {
+        String imagePath = "src/main/resources/static/img";
+
+        List<Slide> slides = new ArrayList<>();
+        slides.add(new Slide("Московский государственный университет", imagePath + "Mgu.jpeg", "Один из самых престижных университетов России."));
+        slides.add(new Slide("МГТУ им. Н.Э. Баумана", imagePath + "baum.jpeg", "Ведущий технический университет в России."));
+        slides.add(new Slide("МФТИ (Физтех)", imagePath + "mirea.jpeg", "Один из самых сильных университетов в области физики и математики."));
+        return slides;
+    }
+
     @GetMapping("index")
     public String index() {
         return "index";
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home2() {
         return "home";
     }
 
@@ -52,7 +72,11 @@ public class AuthController {
         return "login";
     }
 
-    // handler method to handle user registration request
+    @GetMapping("/dop")
+    public String dop() {
+        return "dop";
+    }
+
     @GetMapping("register")
     public String showRegistrationForm(Model model) {
         UserDto user = new UserDto();
@@ -60,7 +84,6 @@ public class AuthController {
         return "register";
     }
 
-    // handler method to handle register user form submit request
     @PostMapping("/register/save")
     public String registration(@Valid @ModelAttribute("user") UserDto user,
                                BindingResult result,

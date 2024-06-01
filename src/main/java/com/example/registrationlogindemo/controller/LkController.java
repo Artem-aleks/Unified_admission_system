@@ -2,7 +2,7 @@ package com.example.registrationlogindemo.controller;
 
 
 import com.example.registrationlogindemo.entity.User;
-import com.example.registrationlogindemo.service.UserService;
+import com.example.registrationlogindemo.repository.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,16 +18,18 @@ public class LkController {
 
     @GetMapping("/Lk")
     public String showUserInfo(Model model) {
-        // Get the currently authenticated user
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
-        // Fetch the user details from the database
         User user = userService.findByEmail(email);
 
-        // Add the user's email and name to the model
+        model.addAttribute("profile_image", "/img/mirera.jpeg");
         model.addAttribute("email", user.getEmail());
         model.addAttribute("name", user.getName());
+        model.addAttribute("ege_scored_subjects", user.getEgeScoredSubjects());
+        model.addAttribute("total_ege_score", user.getTotalEgeScore());
+        model.addAttribute("universities_applying_to", user.getUniversitiesApplyingTo());
+
 
         return "Lk";
     }

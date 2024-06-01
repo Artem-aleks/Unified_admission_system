@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Единая система поступления</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .hero-image {
+            background-image: url('/img/mirea.jpeg');
+            background-size: cover;
+            background-position: center;
+            height: 798px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-text {
+            text-align: center;
+            color: #333333;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        .feature {
+            background-color: #f5f5f5;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .feature h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .feature p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
 <header data-bs-theme="dark">
@@ -28,25 +55,30 @@
     </nav>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <h1 class="display-4 text-center text-body-emphasis">Centered screenshot</h1>
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4 text-center">Quickly design and customize responsive mobile-first sites with Bootstrap, the world's
-                most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system,
-                extensive prebuilt components, and powerful JavaScript plugins.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" onclick="redirectTologin()">Вход</button>
-                <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" onclick="redirectToregister()">Регистрация</button>
-            </div>
+<div class="hero-image">
+    <h1 class="display-4 mb-4">Единая система поступления</h1>
+    <div class="hero-text">
+        <p class="lead">Упростите процесс подачи заявлений в университеты.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" onclick="redirectTologin()">Вход</button>
+            <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" onclick="redirectToregister()">Регистрация</button>
         </div>
     </div>
-</nav>
+</div>
 
 <div class="container my-5">
     <div class="row">
-        <div class="col-12">
-            <img src="/img/Chernehevskiy.jpeg" class="img-fluid mx-auto d-block" alt="My Photo">
+        <div class="col-md-6">
+            <div class="feature">
+                <h3>Почему выбрать Единую систему поступления?</h3>
+                <p>Единая система поступления предоставляет удобный и централизованный способ подачи заявлений в различные университеты. Это позволяет абитуриентам сэкономить время и упростить процесс поступления.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="feature">
+                <h3>Простая и интуитивно понятная навигация</h3>
+                <p>Интерфейс Единой системы поступления спроектирован таким образом, чтобы быть максимально удобным и понятным для пользователей. Вы легко сможете найти всю необходимую информацию и подать заявки в интересующие университеты.</p>
+            </div>
         </div>
     </div>
 </div>
@@ -58,6 +90,7 @@
 </script>
 
 <script>
+
     function redirectToregister() {
         window.location.href = "/register";
     }
